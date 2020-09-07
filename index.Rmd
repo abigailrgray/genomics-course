@@ -6,11 +6,11 @@ output: html_document
 bibliography: data/references.bib
 ---
 
-### Lab 1
-https://github.com/abigailrgray/genomics-course/blob/master/lab1_abigailgray.html
+### Labs
 
-### Lab 2
-https://github.com/abigailrgray/genomics-course/blob/master/lab2_abigailgray.html
+* 1 : [Lab 1](lab1_abigailgray.html)
+
+* 2 : [Lab 2](lab2_abigailgray.html)
 
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
