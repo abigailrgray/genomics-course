@@ -1,0 +1,198 @@
+---
+title: "Lab 3 Data Wrangling"
+author: "Abigail Gray"
+date: "September 7, 2020"
+output: html_document
+---
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+```{r}
+download.file(url="https://ndownloader.figshare.com/files/2292169",
+              destfile = "data/portal_data_joined.csv")
+              
+surveys <- read.csv("data/portal_data_joined.csv")
+```
+```{r}
+head(surveys)
+```
+
+### Challenge Questions
+
+```{r}
+str(surveys)
+```
+* 1. Class: data frame
+* 2. Number of rows: 34786, number of columns: 13
+* 3. Number of species: 48
+
+### Challenge Questions
+* 1.
+```{r}
+surveys[200, ]
+```
+* 2.
+```{r}
+nrow(surveys)
+```
+
+```{r}
+surveys[34786, ]
+```
+
+```{r}
+tail(surveys)
+```
+
+```{r}
+n_rows <- nrow(surveys)
+surveys_last <- surveys[n_rows, ]
+surveys_last
+```
+* 3.
+```{r}
+surveys_middle <- surveys[n_rows / 2, ]
+surveys_middle
+```
+* 4.
+```{r}
+surveys[-(7:n_rows), ]
+```
+```{r}
+sex <- factor(c("male", "female", "female", "male"))
+levels(sex)
+nlevels(sex)
+sex
+```
+
+```{r}
+sex <- factor(sex, levels = c("male", "female"))
+sex
+```
+```{r}
+as.character(sex)
+```
+
+```{r}
+year_fct <- factor(c(1990, 1983, 1997, 1998, 1990))
+as.numeric(levels(year_fct))[year_fct]
+```
+```{r}
+plot(as.factor(surveys$sex))
+```
+
+```{r}
+sex <- factor(surveys$sex)
+head(sex)
+```
+```{r}
+levels(sex)
+```
+```{r}
+levels(sex)[1] <- "undetermined"
+levels(sex)
+```
+```{r}
+head(sex)
+```
+
+### Challenge Questions
+
+```{r}
+levels(sex)[2] <- "female"
+levels(sex)[3] <- "male"
+sex <- factor(sex, levels = c("female", "male", "undetermined"))
+plot(sex)
+```
+```{r}
+surveys <- read.csv("data/portal_data_joined.csv", stringsAsFactors = TRUE)
+str(surveys)
+```
+```{r}
+surveys <- read.csv("data/portal_data_joined.csv", stringsAsFactors = FALSE)
+str(surveys)
+```
+```{r}
+surveys$plot_type <- factor(surveys$plot_type)
+```
+
+### Challenge
+1. data.frame with fixed mistakes:
+```{r}
+animal_data <- data.frame(
+          animal = c("dog", "cat", "sea cucumber", "sea urchin"),
+          feel = c("furry", "furry", "squishy", "spiny"),
+          weight = c(45, 8, 1.1, 0.8)
+          )
+
+```
+* 2. 
+```{r}
+country_climate <- data.frame(
+       country = c("Canada", "Panama", "South Africa", "Australia"),
+       climate = c("cold", "hot", "temperate", "hot/temperate"),
+       temperature = c(10, 30, 18, "15"),
+       northern_hemisphere = c(TRUE, TRUE, FALSE, "FALSE"),
+       has_kangaroo = c(FALSE, FALSE, FALSE, 1)
+       )
+```
+* Guesses: country, climate, and northern_hemisphere are factors, temperature and has_kangaroo are numeric
+```{r}
+str(country_climate)
+```
+* Actual answers: country, climate, temperature, and northern_hemisphere are factors, has_kangaroo is numeric
+* I expected temperature to be numeric but it is actually a factor, this is probably because of the quotations around 15
+
+```{r}
+country_climate <- data.frame(
+       country = c("Canada", "Panama", "South Africa", "Australia"),
+       climate = c("cold", "hot", "temperate", "hot/temperate"),
+       temperature = c(10, 30, 18, "15"),
+       northern_hemisphere = c(TRUE, TRUE, FALSE, "FALSE"),
+       has_kangaroo = c(FALSE, FALSE, FALSE, 1), stringsAsFactors = FALSE
+       )
+```
+```{r}
+str(country_climate)
+```
+* Adding stringAsFactors = false makes country, climate, temperature, and northern_hemisphere into character vectors instead of factors
+* To ensure each column has accurate data type, remove the quotation marks around "15" for temperature column and "FALSE" for northern_hemisphere column and replace 1 with TRUE for has_kangaroo column
+
+```{r}
+library("lubridate")
+```
+```{r}
+my_date <- ymd("2015-01-01")
+str(my_date)
+```
+```{r}
+head(paste(surveys$year, surveys$month, surveys$day, sep = "-"))
+```
+```{r}
+head(ymd(paste(surveys$year, surveys$month, surveys$day, sep = "-")))
+```
+```{r}
+surveys$date <- ymd(paste(surveys$year, surveys$month, surveys$day, sep = "-"))
+```
+```{r}
+str(surveys)
+```
+```{r}
+summary(surveys$date)
+```
+```{r}
+missing_dates <- surveys[is.na(surveys$date), c("year", "month", "day")]
+head(missing_dates)
+```
+* These dates failed to parse because there is no 31st in the months of april and september. You could either move these data points or change the dates from 31 to 30 to make them valid dates.
+
+
+
+
+
+
+
+
+
+

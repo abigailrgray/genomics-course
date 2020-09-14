@@ -12,6 +12,10 @@ bibliography: data/references.bib
 
 * 2 : [Lab 2](lab2_abigailgray.html)
 
+* 3A : [Lab 3A](lab3A_abigailgray.html)
+
+* 3B : [Lab 3B](lab3B_abigailgray.html)
+
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
 # REFERENCES
