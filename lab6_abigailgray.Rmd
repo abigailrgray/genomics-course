@@ -6,8 +6,6 @@ output: html_document
 bibliography: lab6_references.bib
 ---
 
-Application written in R [@RCoreTeam]. Data retrieved from the JSU CSSE Covid-19 Data Repository [@CSSEGISandData_2020a]. Multiple tutorials were used for creating maps [@Andersen2018], [@pkdown], [@Moreno2018].
-
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(tidyverse)
 library(maps)
@@ -150,5 +148,10 @@ ggplotly(
   theme_gray()
 )
 ```
+
+
+
+
+Application written in R [@RCoreTeam]. Data retrieved from the JSU CSSE Covid-19 Data Repository [@CSSEGISandData_2020a]. Multiple tutorials were used for creating maps [@Andersen2018], [@pkdown], [@Moreno2018].
 
 ### REFERENCES
