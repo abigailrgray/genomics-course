@@ -24,6 +24,8 @@ bibliography: data/references.bib
 
 * 5a : [Lab 5a](lab5a_abigailgray.html)
 
+* 6 : [Lab 6](lab6_abigailgray.html)
+
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
 # REFERENCES
