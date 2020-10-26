@@ -28,6 +28,8 @@ bibliography: data/references.bib
 
 * 7 : [Lab 7](lab7_abigailgray.html)
 
+* 8 : [Lab 8](lab8_abigailgray.html)
+
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
 # REFERENCES

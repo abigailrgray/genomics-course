@@ -1,0 +1,241 @@
+---
+title: 'Lab 8: Sequence Alignment, Phylogenetic Analysis and Tree Visualization'
+author: "Abigail Gray"
+date: "10/25/2020"
+output: html_document
+---
+
+### Exercise 1
+
+
+![Phylogeny Tree](images/Tree_image.png)
+
+### Exercise 3
+### ggtree tutorial
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(ggtree)
+library(treeio)
+library(ggimage)
+```
+
+### Basic trees
+```{r}
+tree <- read.tree("data/tree_newick.nwk")
+tree
+```
+```{r}
+ggplot(tree) + geom_tree() + theme_tree()
+```
+
+```{r}
+ggtree(tree) + theme_tree2()
+```
+```{r}
+ggtree(tree, branch.length="none")
+```
+
+```{r}
+ggtree(tree, branch.length="none", color="blue", size=2, linetype=3)
+```
+### ggtree tutorial Exercise 1
+* 1.
+
+```{r}
+ggtree(tree, branch.length="none", color="blue", size=2, linetype=3, layout="slanted")
+```
+
+* 2.
+```{r}
+ggtree(tree, branch.length="none", color="blue", size=2, linetype=3, layout="circular")
+```
+* 3.
+```{r}
+ggtree(tree, branch.length="none", color="red", size=2, layout="circular")
+```
+
+### Other tree geoms
+```{r}
+p <- ggtree(tree)
+p + geom_nodepoint()
+```
+
+```{r}
+p + geom_tippoint()
+```
+
+```{r}
+p + geom_tiplab()
+```
+
+### ggtree tutorial Exercise 2
+
+```{r}
+p + 
+  geom_nodepoint(color="goldenrod2", size=4, alpha=0.5) +
+  geom_tippoint(color="purple", pch=18) +
+  geom_tiplab(color="purple") +
+  ggtitle("Exercise 2 Figure: Phylogeny Example")
+```
+### Tree annotation
+### Internal node number
+```{r}
+ggtree(tree) + geom_text(aes(label=node), hjust=-.3)
+```
+```{r}
+ggtree(tree) + geom_tiplab()
+```
+
+```{r}
+MRCA(tree, c("C", "E"))
+```
+
+```{r}
+MRCA(tree, c("G", "H"))
+```
+
+### Labeling clades
+```{r}
+ggtree(tree) + 
+  geom_tiplab() + 
+  geom_cladelabel(node=17, label="Some random clade", 
+                  color="red2", offset=.8, align=TRUE) + 
+  geom_cladelabel(node=21, label="A different clade", 
+                  color="blue", offset=.8, align=TRUE) +
+  
+  theme_tree2() + 
+  xlim(0, 70) + 
+  theme_tree()
+```
+
+```{r}
+ggtree(tree) + 
+  geom_tiplab() + 
+  geom_hilight(node=17, fill="gold") + 
+  geom_hilight(node=21, fill="purple")
+```
+
+### Connecting taxa
+
+```{r}
+ggtree(tree) + 
+  geom_tiplab() + 
+  geom_taxalink("E", "H", color="blue3") +
+  geom_taxalink("C", "G", color="orange2", curvature=-.9)
+```
+
+### ggtree tutorial Exercise 3
+
+```{r}
+MRCA(tree, c("B", "C"))
+```
+```{r}
+MRCA(tree, c("L", "J"))
+```
+
+```{r}
+ggtree(tree) + 
+  geom_tiplab() + 
+  geom_hilight(node=19, fill="blue") +
+  geom_hilight(node=23, fill="goldenrod2") +
+  geom_cladelabel(node=17, label="Superclade 17", fontsize=3, 
+                  color="red3", offset=1.2) +
+    theme_tree2() + 
+  xlim(0, 57) + 
+  theme_tree() +
+  geom_taxalink("C", "E", color="grey60", linetype=2) +
+  geom_taxalink("G", "J", color="grey60", linetype=2) +
+  theme_tree2() +
+  ggtitle("Exercise 3 Figure")
+```
+
+### Advanced tree annotation
+
+```{r}
+tree <- read.beast("data/flu_tree_beast.tree")
+```
+
+```{r, fig.height=12}
+ggtree(tree, mrsd="2013-01-01") + 
+  theme_tree2() + 
+  geom_tiplab(align=TRUE, linesize=.5) + 
+  xlim(1990, 2020)
+```
+
+```{r}
+msaplot(p=ggtree(tree), fasta="data/flu_aasequence.fasta", window=c(150, 175))
+```
+
+### Bonus!
+### Many trees
+
+```{r}
+set.seed(42)
+trees <- lapply(rep(c(10, 25, 50, 100), 3), rtree)
+class(trees) <- "multiPhylo"
+ggtree(trees) + facet_wrap(~.id, scale="free", ncol=4) + ggtitle("Many trees. Such phylogenetics. Wow.")
+```
+
+### Plot tree with other data
+```{r}
+tree <- rtree(30)
+
+p <- ggtree(tree)
+
+d1 <- data.frame(id=tree$tip.label, val=rnorm(30, sd=3))
+
+p2 <- facet_plot(p, panel="dot", data=d1, geom=geom_point, aes(x=val), color='red3')
+
+d2 <- data.frame(id=tree$tip.label, value = abs(rnorm(30, mean=100, sd=50)))
+
+p3 <- facet_plot(p2, panel='bar', data=d2, geom=geom_segment, 
+           aes(x=0, xend=value, y=y, yend=y), size=3, color='blue4') 
+
+p3 + theme_tree2()
+```
+
+### Overlay organism silouhettes
+
+```{r}
+newick <- "((Pongo_abelii,(Gorilla_gorilla_gorilla,(Pan_paniscus,Pan_troglodytes)Pan,Homo_sapiens)Homininae)Hominidae,Nomascus_leucogenys)Hominoidea;"
+
+tree <- read.tree(text=newick)
+
+d <- ggimage::phylopic_uid(tree$tip.label)
+d$body_mass = c(52, 114, 47, 45, 58, 6)
+
+p <- ggtree(tree) %<+% d + 
+  geom_tiplab(aes(image=uid, colour=body_mass), geom="phylopic", offset=2.5) +
+  geom_tiplab(aes(label=label), offset = .2) + xlim(NA, 7) +
+  scale_color_viridis_c()
+p  
+```
+### Exercise 4
+
+```{r}
+tree <- read.tree("data/TOL_fastree_result.tre")
+```
+
+
+```{r}
+ggtree(tree, layout="circular", branch.length = "none") +
+  xlim(0, 20) +
+  geom_tiplab(hjust=-.1, size = 3) +
+  geom_hilight(node=22, fill="red") +
+  geom_hilight(node=30, fill="blue", extend=0.18) +
+  geom_hilight(node=25, fill="yellow")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
