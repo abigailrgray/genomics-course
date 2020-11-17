@@ -32,6 +32,8 @@ bibliography: data/references.bib
 
 * 9 : [Lab 9A](lab9a_abigailgray.html)
 
+* 9x : [Lab 9x](lab9x_abigailgray.html)
+
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
 # REFERENCES
