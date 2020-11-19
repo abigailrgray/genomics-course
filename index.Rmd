@@ -30,9 +30,11 @@ bibliography: data/references.bib
 
 * 8 : [Lab 8](lab8_abigailgray.html)
 
-* 9 : [Lab 9A](lab9a_abigailgray.html)
+* 9 : [Lab 9](lab9a_abigailgray.html)
 
 * 9x : [Lab 9x](lab9x_abigailgray.html)
+
+* 10 : [Lab 10](lab10_abigailgray.html)
 
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
