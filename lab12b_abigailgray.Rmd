@@ -25,7 +25,7 @@ createNetworkFromGraph (g, title='simple network', collection='GraphNEL Example'
 
 ![](images/RCy3_image4.png)
 
-### Add node attributes
+#### Add node attributes
 ```{r}
 df <- data.frame (moleculeType=c('kinase','TF','cytokine','cytokine'),
                      log2fc=c(1.8,3.0,-1.2,-2.5),
@@ -37,7 +37,7 @@ loadTableData(df)
 
 ![](images/RCy3_image5.png)
 
-### Modifying the display: defaults and mappings
+#### Modifying the display: defaults and mappings
 ```{r}
 setNodeShapeDefault('OCTAGON')
 setNodeColorDefault('#AAFF88')
@@ -77,7 +77,7 @@ control.points = c (-3.0, 2.0, 3.0)
 
 ![](images/RCy3_image7.png)
 
-### Selecting nodes
+#### Selecting nodes
 
 ```{r}
 selectNodes ('C','name')
@@ -102,13 +102,13 @@ clearSelection()
 
 ![](images/RCy3_image10.png)
 
-### Saving and export
+#### Saving and export
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 saveSession('vignette_session')
 ```
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 full.path=paste(getwd(),'vignette_image',sep='/')
     exportImage(full.path, 'PNG', zoom=200)
     exportImage(full.path, 'PDF')
