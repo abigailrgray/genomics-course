@@ -1,0 +1,115 @@
+---
+title: "Lab 12: Network Analysis using Cytoscape and RCy3 Part II"
+author: "Abigail Gray"
+date: "11/29/2020"
+output: html_document
+---
+
+#### Bioconductor graph example
+
+```{r}
+library(RCy3)
+cytoscapePing()
+```
+
+
+```{r}
+g = new ('graphNEL', edgemode='directed')
+    g = graph::addNode ('A', g)
+    g = graph::addNode ('D', g)
+    g = graph::addNode ('C', g, edges = list('D'))
+    g = graph::addNode ('B', g, edges = list(c('A','D','C')))
+
+createNetworkFromGraph (g, title='simple network', collection='GraphNEL Example')
+```
+
+![](images/RCy3_image4.png)
+
+### Add node attributes
+```{r}
+df <- data.frame (moleculeType=c('kinase','TF','cytokine','cytokine'),
+                     log2fc=c(1.8,3.0,-1.2,-2.5),
+                     row.names = c('A','B','C','D'),
+                     stringsAsFactors = FALSE)
+
+loadTableData(df)
+```
+
+![](images/RCy3_image5.png)
+
+### Modifying the display: defaults and mappings
+```{r}
+setNodeShapeDefault('OCTAGON')
+setNodeColorDefault('#AAFF88')
+setNodeSizeDefault(60)
+setNodeFontSizeDefault(30)
+```
+
+```{r}
+getNodeShapes ()   # diamond, ellipse, trapezoid, triangle, etc.
+    column <- 'moleculeType'
+    values <- c ('kinase',  'TF','cytokine')
+    shapes <- c ('DIAMOND', 'TRIANGLE', 'RECTANGLE')
+    setNodeShapeMapping (column, values, shapes)
+```
+
+```{r}
+column <- 'log2fc'
+    control.points <- c (-3.0, 0.0, 3.0)
+    colors <-  c ('#5588DD', '#FFFFFF', '#DD8855')
+   setNodeColorMapping (column, control.points, colors)
+```
+
+![](images/RCy3_image6.png)
+
+```{r}
+control.points <- c (-2.0, 0.0, 2.0)
+    colors <-  c ('#2255CC', '#5588DD', '#FFFFFF', 'DD8855','#CC5522')
+    setNodeColorMapping (column, control.points, colors)
+```
+
+
+```{r}
+control.points = c (-3.0, 2.0, 3.0)
+    sizes = c (20, 80, 90)
+    setNodeSizeMapping (column, control.points, sizes)
+```
+
+![](images/RCy3_image7.png)
+
+### Selecting nodes
+
+```{r}
+selectNodes ('C','name')
+getSelectedNodes ()
+```
+
+![](images/RCy3_image8.png)
+
+```{r}
+selectFirstNeighbors ()
+```
+
+![](images/RCy3_image9.png)
+
+```{r}
+node.names <- getSelectedNodes ()
+```
+
+```{r}
+clearSelection()
+```
+
+![](images/RCy3_image10.png)
+
+### Saving and export
+
+```{r}
+saveSession('vignette_session')
+```
+
+```{r}
+full.path=paste(getwd(),'vignette_image',sep='/')
+    exportImage(full.path, 'PNG', zoom=200)
+    exportImage(full.path, 'PDF')
+```
