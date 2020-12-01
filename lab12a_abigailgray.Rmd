@@ -37,6 +37,7 @@ nodes <- data.frame(id=c("node 0","node 1","node 2","node 3"),
            group = c("A","A","B","B"), # categorical strings
            score=as.integer(c(20,10,15,5)), # integers
            stringsAsFactors=FALSE)
+
 edges <- data.frame(source=c("node 0","node 0","node 0","node 2"),
            target=c("node 1","node 2","node 3","node 3"),
            interaction=c("inhibits","interacts","activates","interacts"),  # optional
