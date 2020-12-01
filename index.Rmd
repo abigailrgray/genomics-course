@@ -36,6 +36,8 @@ bibliography: data/references.bib
 
 * 10 : [Lab 10](lab10_abigailgray.html)
 
+* 11 : [Lab 11](lab11_abigailgray.html)
+
 * 12 : [Lab 12 Part I](lab12a_abigailgray.html), [Lab 12 Part II](lab12b_abigailgray.html)
 
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
