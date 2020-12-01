@@ -2,7 +2,10 @@
 title: 'Lab 12: Network Analysis using Cytoscape and RCy3 Part I'
 author: "Abigail Gray"
 date: "11/20/2020"
-output: html_document
+output:
+  prettydoc::html_pretty:
+    theme: tactile
+    highlight: github
 ---
 
 

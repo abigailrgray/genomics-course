@@ -2,7 +2,10 @@
 title: "Lab 12: Network Analysis using Cytoscape and RCy3 Part II"
 author: "Abigail Gray"
 date: "11/29/2020"
-output: html_document
+output:
+    prettydoc::html_pretty:
+        theme: tactile
+        highlight: github
 ---
 
 #### Bioconductor graph example
